@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>High School Scheduler</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #FFE2E2;
+            color: #99DDCC;
+            margin-bottom: 80px;
+            .logo {
+                font-family: 'Pacifico', cursive;
+            font-size: 3em;
+            font-weight: bold;
+            color: #99DDCC;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
+            animation: glow 3s infinite alternate;
+        }
+
+
+        header {
+            background-color: #F6F6F6;
+            color: #99DDCC;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            background-color: #BAD7DF;
+            color: #F6F6F6;
+            text-align: center;
+            font-size: 30px;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        nav a {
+            color: #F6F6F6;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #BAD7DF;
+        }
+
+        main {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+            align-items: flex-start;
+            padding: 20px;
+        }
+
+        table {
+            width: 60%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background-color: #F6F6F6;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            border: 2px solid #BAD7DF;
+            padding: 12px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #BAD7DF;
+            color: #F6F6F6;
+        }
+
+        .lesson-input {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 2px;
+            border: 1px solid #F6F6F6;
+            border-radius: 4px;
+            font-size: x-large;
+            box-sizing: border-box;
+            text-align: center;
+            color: #99DDCC;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px #333;
+            background-color: #F6F6F6;
+        }
+
+        .list-container {
+            max-width: 300px;
+            width: 100%;
+            margin-top: 20px;
+            background-color: #F6F6F6;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        .list-entry {
+            padding: 12px;
+            border-bottom: 1px solid #99DDCC;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            border-radius: 4px;
+            position: relative;
+            text-align: right;
+        }
+
+        .list-entry:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 100%;
+            height: 3px;
+            background-image: linear-gradient(to right, #fff 49%, #fff6dc 50%, #fff 51%);
+            transform: translateX(-50%);
+        }
+
+        .list-entry:last-child {
+            border-bottom: none;
+        }
+
+        .list-entry:hover {
+            background-color: #F6F6F6;
+        }
+
+        .marked {
+            text-decoration: line-through;
+            color: #888;
+        }
+
+        footer {
+            background-color: #F6F6F6;
+            color: #FFE2E2;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .logB
+        {
+            font-family: 'Courier New', Courier, monospace;
+            color: #BAD7DF;
+        }
+
+        .add-event-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        #eventInput {
+            text-align: center;
+            width: 60%;
+            padding: 8px;
+            margin-right: 10px;
+            border: 1px solid #F6F6F6;
+            border-radius: 4px;
+            box-sizing: border-box;
+            
+        }
+
+        #addEventBtn {
+            padding: 8px;
+            background-color: #F6F6F6;
+            color: #FFE2E2;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">MySchool</div>
+
+    
+    </header>
+
+
+    <nav>
+        <a href="l.html">לומדים ביחד</a>
+        <a href="t.html">תרגול</a>
+        <a href="s.html">סיכומים</a>
+    </nav>
+
+    <main>
+        <table>
+            <tbody id="timetable">
+                <!-- Time slots and lessons will be dynamically added here -->
+            </tbody>
+        </table>
+
+        <div class="list-container">
+            <h2>To-Do List</h2>
+            <div class="notebook">
+                <!-- New event entries will be dynamically added here -->
+            </div>
+
+            <div class="add-event-container">
+                <input type="text" id="eventInput" placeholder="">
+                <button id="addEventBtn" onclick="addEvent()">Add Event</button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <a href="sub.html" class="logB">log in</a>
+    </footer>
+
+    <script>
+        function addLesson(day, time) {
+            const lessonInputId = `lessonInput-${day}-${time}`;
+            const lessonInput = document.getElementById(lessonInputId).value;
+
+            if (lessonInput.trim() !== '') {
+                const timetable = document.getElementById('timetable');
+
+                // Find the row for the specified time
+                const timeRow = timetable.querySelector(`#${time}`);
+
+                // Create a new cell for the lesson
+                const lessonCell = document.createElement('td');
+                lessonCell.textContent = lessonInput;
+
+                // Append the new cell to the specified day's row
+                timeRow.querySelector(`.${day}`).appendChild(lessonCell);
+
+                // Clear the lesson input
+                document.getElementById(lessonInputId).value = '';
+            }
+        }
+
+        function markEntry(entry) {
+            entry.classList.toggle('marked');
+        }
+
+        function addEvent() {
+            const eventInput = document.getElementById('eventInput');
+            const eventName = eventInput.value.trim();
+
+            if (eventName !== '') {
+                const listContainer = document.querySelector('.notebook');
+
+                // Create a new event entry
+                const eventEntry = document.createElement('div');
+                eventEntry.classList.add('list-entry');
+                eventEntry.textContent = eventName;
+                eventEntry.onclick = function () {
+                    markEntry(eventEntry);
+                };
+
+                // Append the new event entry to the list
+                listContainer.appendChild(eventEntry);
+
+                // Clear the event input
+                eventInput.value = '';
+            }
+        }
+
+        // Create the timetable structure dynamically
+        document.addEventListener('DOMContentLoaded', function () {
+            const days = ['חמישי', 'רביעי', 'שלישי', 'שני', 'ראשון'];
+            const times = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
+
+            const timetable = document.getElementById('timetable');
+
+            // Create the header row with day names
+            const headerRow = document.createElement('tr');
+            headerRow.appendChild(document.createElement('th'));
+
+            days.forEach(day => {
+                const dayHeader = document.createElement('th');
+                dayHeader.textContent = day;
+                headerRow.appendChild(dayHeader);
+            });
+
+            timetable.appendChild(headerRow);
+
+            // Create the rows for each time slot
+            times.forEach(time => {
+                const timeRow = document.createElement('tr');
+                timeRow.setAttribute('id', time);
+
+                // Create a cell for the time
+                const timeCell = document.createElement('td');
+                timeCell.textContent = time;
+                timeRow.appendChild(timeCell);
+
+                // Create cells for each day
+                days.forEach(day => {
+                    const dayCell = document.createElement('td');
+                    dayCell.classList.add(day);
+
+                    // Create an input field for adding lessons
+                    const lessonInput = document.createElement('input');
+                    lessonInput.classList.add('lesson-input');
+                    lessonInput.setAttribute('id', `lessonInput-${day}-${time}`);
+                    lessonInput.setAttribute('placeholder', '');
+
+                    // Handle Enter key to add lesson
+                    lessonInput.addEventListener('keypress', function (event) {
+                        if (event.key === 'Enter') {
+                            addLesson(day, time);
+                        }
+                    });
+
+                    // Append input to the cell
+                    dayCell.appendChild(lessonInput);
+
+                    // Append the cell to the row
+                    timeRow.appendChild(dayCell);
+                });
+
+                // Append the time row to the timetable
+                timetable.appendChild(timeRow);
+            });
+        });
+    </script>
+
+</body>
+</html>

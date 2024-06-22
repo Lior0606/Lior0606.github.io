@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>High School Scheduler</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #FFE2E2;
+            color: #99DDCC;
+            margin-bottom: 80px;
+            .logo {
+                font-family: 'Pacifico', cursive;
+            font-size: 3em;
+            font-weight: bold;
+            color: #99DDCC;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
+            animation: glow 3s infinite alternate;
+        }
+
+
+        header {
+            background-color: #F6F6F6;
+            color: #99DDCC;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            background-color: #BAD7DF;
+            color: #F6F6F6;
+            text-align: center;
+            font-size: 30px;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        nav a {
+            color: #F6F6F6;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #BAD7DF;
+        }
+
+        main {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+            align-items: flex-start;
+            padding: 20px;
+        }
+
+        .container {
+            width: 300px;
+            margin: 100px auto;
+            background-color: #F6F6F6;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">MySchool</div>
+
+    
+    </header>
+
+
+    <nav>
+        <a href="l.html">לומדים ביחד</a>
+        <a href="t.html">תרגול</a>
+        <a href="s.html">סיכומים</a>
+    </nav>
+
+    <main>
+        <form id="loginForm" onsubmit="login(event)">
+            <h2>Sign up</h2>
+            <div class="input-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit">Login</button>
+        </form>
+
+ <script>
+        def setup_database():
+    conn = sqlite3.connect('users.db')
+    cursor = conn.cursor()
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY,
+            username TEXT UNIQUE NOT NULL,
+            password TEXT NOT NULL
+        )
+    ''')
+    conn.commit()
+    conn.close()
+
+def hash_password(password):
+    return hashlib.sha256(password.encode()).hexdigest()
+
+def register_user(username, password):
+    conn = sqlite3.connect('users.db')
+    cursor = conn.cursor()
+    
+    hashed_password = hash_password(password)
+    
+    try:
+        cursor.execute('INSERT INTO users (username, password) VALUES (?, ?)', (username, hashed_password))
+        conn.commit()
+        print("User registered successfully!")
+    except sqlite3.IntegrityError:
+        print("Username already exists!")
+    finally:
+        conn.close()
+
+def login_user(username, password):
+    conn = sqlite3.connect('users.db')
+    cursor = conn.cursor()
+    
+    hashed_password = hash_password(password)
+    
+    cursor.execute('SELECT * FROM users WHERE username = ? AND password = ?', (username, hashed_password))
+    user = cursor.fetchone()
+    
+    conn.close()
+    
+    if user:
+        print("Login successful!")
+        return True
+    else:
+        print("Login failed! Incorrect username or password.")
+        return False
+
+if __name__ == "__main__":
+    # Set up the database (run only once)
+    setup_database()
+
+    # Register a new user
+    register_user('john_doe', 'password123')
+
+    # Attempt to login with the correct credentials
+    login_user('john_doe', 'password123')
+
+    # Attempt to login with incorrect credentials
+    login_user('john_doe', 'wrongpassword')
+    </script>
+</body>
+</html>
